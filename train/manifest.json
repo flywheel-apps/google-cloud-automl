@@ -1,0 +1,61 @@
+{
+	"name": "automl-train",
+	"label": "Google AutoML model trainer",
+	"description": "Create AutoML Vision model for image classification",
+	"version": "0.2.0",
+	"flywheel": "0",
+	"inputs": {
+		"api_key": {"base": "api-key"},
+		"service_account": {
+			"base": "file",
+			"description": "Google Service Account JSON.",
+			"type": {"enum": ["json"]}
+		},
+		"training_set": {
+			"base": "file",
+			"description": "Training-set JSON exported via search.",
+			"type": {"enum": ["json"]}
+		}
+	},
+	"config": {
+		"aml_location": {
+			"description": "AutoML location",
+			"type": "string",
+			"default": "us-central1"
+		},
+		"gcs_prefix": {
+			"description": "Storage prefix for staging model inputs",
+			"type": "string",
+			"pattern": "^gs://.+$",
+			"optional": true
+		},
+		"img_frame_selection": {
+			"description": "Frame selection strategy for 4D data (all|mid|N - ignored for 3D)",
+			"type": "string",
+            "pattern": "^all|mid|[0-9]+$",
+			"default": "mid"
+		},
+		"img_slice_selection": {
+			"description": "Slice selection strategy for 3D data (all|mid|N - ignored for 2D)",
+			"type": "string",
+            "pattern": "^all|mid|[0-9]+$",
+			"default": "all"
+		},
+		"train_budget": {
+			"description": "Allowed training budget (hours)",
+			"type": "integer",
+			"default": 1
+		}
+	},
+	"author": "Flywheel <support@flywheel.io>",
+	"maintainer": "Flywheel <support@flywheel.io>",
+	"license": "Other",
+	"source": "",
+	"url": "",
+	"command": "python3 automl_train.py",
+	"custom": {
+		"gear-builder": {
+			"image": "automl-train"
+		}
+	}
+}

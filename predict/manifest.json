@@ -1,0 +1,56 @@
+{
+	"name": "automl-predict",
+	"label": "Google AutoML image classifier",
+	"description": "Classify images with an existing AutoML Vision model",
+	"version": "0.2.0",
+	"flywheel": "0",
+	"inputs": {
+		"input": {
+			"base": "file",
+			"description": "DICOM or NIfTI to classify.",
+			"type": {"enum": ["dicom", "nifti"]}
+		},
+		"service_account": {
+			"base": "file",
+			"description": "Google Service Account JSON.",
+			"type": {"enum": ["json"]}
+		},
+		"training_result": {
+			"base": "file",
+			"description": "Training-result JSON created using the automl-train gear.",
+			"type": {"enum": ["json"]}
+		}
+	},
+	"config": {
+		"img_frame_selection": {
+			"description": "Frame selection strategy for 4D data (mid|N - ignored for 3D)",
+			"type": "string",
+            "pattern": "^mid|[0-9]+$",
+			"default": "mid"
+		},
+		"img_slice_selection": {
+			"description": "Slice selection strategy for 3D data (mid|N - ignored for 2D)",
+			"type": "string",
+            "pattern": "^mid|[0-9]+$",
+			"default": "mid"
+		},
+		"score_threshold": {
+			"description": "Minumum prediction confidence considered successful [0.0 - 1.0]",
+			"type": "number",
+            "minimum": 0.0,
+            "maximum": 1.0,
+			"default": 0.5
+		}
+	},
+	"author": "Flywheel <support@flywheel.io>",
+	"maintainer": "Flywheel <support@flywheel.io>",
+	"license": "Other",
+	"source": "",
+	"url": "",
+	"command": "python3 automl_predict.py",
+	"custom": {
+		"gear-builder": {
+			"image": "automl-predict"
+		}
+	}
+}
