@@ -6,4 +6,3 @@ pydicom==1.1.0
 med2image==1.1.2
 pystache==0.5.4
 shortuuid==0.5.0
-git+https://github.com/flywheel-io/healthcare-api@develop

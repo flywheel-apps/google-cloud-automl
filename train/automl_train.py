@@ -153,7 +153,8 @@ def main(context):
     model_full_id = resp.name
     # List all the model evaluations in the model by applying filter.
     aml_model_evaluation = list(automl_client.list_model_evaluations(model_full_id))
-
+    deploy_op = automl_client.deploy_model(model_full_id)
+    deploy_op.result()
     # store model, inputs used and label map alongside training-set (used by predictor)
     log.info('Saving training results')
     training_result_file = 'training_result_' + train_id + '.json'

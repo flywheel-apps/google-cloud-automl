@@ -50,6 +50,7 @@
 	"command": "python3 automl_predict.py",
 	"custom": {
 		"gear-builder": {
+			"category": "converter",
 			"image": "automl-predict"
 		}
 	}

@@ -2,7 +2,7 @@
 	"name": "automl-train",
 	"label": "Google AutoML model trainer",
 	"description": "Create AutoML Vision model for image classification",
-	"version": "0.2.0",
+	"version": "0.2.1",
 	"flywheel": "0",
 	"inputs": {
 		"api_key": {"base": "api-key"},
@@ -55,6 +55,7 @@
 	"command": "python3 automl_train.py",
 	"custom": {
 		"gear-builder": {
+			"category": "analysis",
 			"image": "automl-train"
 		}
 	}

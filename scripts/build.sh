@@ -43,7 +43,7 @@ main() {
         docker build -t automl-train .
         if [ "$UPLOAD_TOGGLE" == true ]; then
             log "INFO: Upload trainer gear ..."
-            fw gear upload -c analysis
+            fw gear upload
         fi
     fi
 
