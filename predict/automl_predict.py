@@ -22,18 +22,11 @@ logging.basicConfig(
 )
 
 
-# TODO limit scopes if possible
+# TODO limit scopes ASAP (scopes are now available)
 SCOPES = ['https://www.googleapis.com/auth/cloud-platform']
 
 
 def main(context):
-    # dev workaround for accessing docker.local - set own host ip
-    # ip -o route get to 8.8.8.8 | sed -n 's/.*src \([0-9.]\+\).*/\1/p'
-    host_ip = '192.168.50.189'
-    with open('/etc/hosts', 'a') as f:
-        f.write(host_ip + '\tdocker.local.flywheel.io\n')
-
-
     # get inputs
     service_account_path = context.get_input_path('service_account')
     training_result_path = context.get_input_path('training_result')

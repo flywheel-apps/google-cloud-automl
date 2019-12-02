@@ -19,6 +19,7 @@ from google.cloud import storage
 from google.cloud.automl_v1beta1 import AutoMlClient
 import shortuuid
 
+
 log = logging.getLogger('flywheel:automl-train')
 logging.basicConfig(
     format='%(asctime)s %(name)15.15s %(levelname)4.4s %(message)s',
@@ -31,32 +32,24 @@ logging.basicConfig(
 LABEL_KEYS = []
 LABEL_VALS = []
 
-
 SUMMARY_TEMPLATE = '''
-### Google AutoML training results
-___
-
+#### Google AutoML training results
 - Total images: {{total_images}}
 - Precision:    {{avg_precision}}
 - Train budget: {{train_budget}}
-- Dataset:      [{{aml_dataset_displayname}}](https://cloud.google.com/automl/ui/vision/datasets/details?project={{gcp_project}}&dataset={{aml_dataset}})
-- Model:        [{{aml_model_displayname}}](https://cloud.google.com/automl/ui/vision/datasets/evaluate?project={{gcp_project}}&dataset={{aml_dataset}}&model={{aml_model}})
+- Dataset:      [{{aml_dataset_displayname}}](https://console.cloud.google.com/vision/datasets/{{aml_dataset}}/images?project={{gcp_project}})
+- Model:        [{{aml_model_displayname}}](https://console.cloud.google.com/vision/datasets/{{aml_dataset}};modelId={{aml_model}}/evaluate?project={{gcp_project}})
 
-**Label mapping**
+---
 
+#### Label mapping
 {{#label_map}}
-{{key}}: {{{value}}}
+- {{key}}: {{{value}}}
 {{/label_map}}
 '''
 
 
 def main(context):
-    # dev workaround for accessing docker.local - set own host ip
-    # ip -o route get to 8.8.8.8 | sed -n 's/.*src \([0-9.]\+\).*/\1/p'
-    host_ip = '192.168.50.189'
-    with open('/etc/hosts', 'a') as f:
-        f.write(host_ip + '\tdocker.local.flywheel.io\n')
-
     # get inputs
     service_account_path = context.get_input_path('service_account')
     training_set_path = context.get_input_path('training_set')
